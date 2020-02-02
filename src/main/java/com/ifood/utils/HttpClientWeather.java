@@ -2,6 +2,7 @@ package com.ifood.utils;
 
 import java.io.IOException;
 
+import com.google.gson.Gson;
 import com.ifood.models.WeatherAPIModel;
 
 import okhttp3.OkHttpClient;
@@ -22,11 +23,16 @@ public class HttpClientWeather extends HttpClient {
             .url(this.url)
             .build();
 
+        Gson gson = new Gson(); 
+
         try (Response response = httpClient.newCall(request).execute()) {
 
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
             ResponseBody body = response.body();
+            String a = body.string();
+            WeatherAPIModel entity = gson.fromJson(a, WeatherAPIModel.class);
+            return entity;
         }
     }
 

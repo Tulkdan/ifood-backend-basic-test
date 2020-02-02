@@ -2,6 +2,9 @@ package com.ifood.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import com.ifood.models.WeatherAPIModel;
 import com.ifood.utils.HttpClientWeather;
 
@@ -17,15 +20,21 @@ public class Weather {
     // https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22
     @RequestMapping(path = "/weather")
     @ResponseBody
-    public String index(@RequestParam String city) {
+    public HashMap<String, String> index(@RequestParam String city) {
 
-        HttpClientWeather client = new HttpClientWeather("api.openweathermap.org/data/2.5/weather");
+        HttpClientWeather client = new HttpClientWeather("https://api.openweathermap.org/data/2.5/weather");
         client.addQueryParam("appid", API_KEY);
         client.addQueryParam("q", city);
+        client.addQueryParam("units", "metric");
 
-        WeatherAPIModel data = client.sendGet();
+        try {
+            WeatherAPIModel data = client.sendGet();
+            return data.toOutput();
+        } catch (IOException e) {
+        }
 
-        return "";
+        return new WeatherAPIModel().toOutput();
+
     }
 
 }
