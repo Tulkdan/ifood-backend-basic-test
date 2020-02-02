@@ -1,10 +1,12 @@
 package com.ifood.utils;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.ifood.models.WeatherAPIModel;
 
+import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -20,6 +22,10 @@ public class HttpClientWeather extends HttpClient {
 
     public WeatherAPIModel sendGet() throws IOException {
         Request request = new Request.Builder()
+            .cacheControl(new CacheControl.Builder()
+                .maxAge(0, TimeUnit.SECONDS)
+                .build()
+            )
             .url(this.url)
             .build();
 
