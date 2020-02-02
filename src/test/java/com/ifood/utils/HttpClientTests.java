@@ -6,9 +6,10 @@ import org.junit.Test;
 
 public class HttpClientTests {
 
+    String url = "https://google.com/";
+
     @Test
     public void shouldReturnAnInstanceOfHttpClientWithUrl() {
-        String url = "https://google.com/";
         HttpClient client = new HttpClient(url);
 
         assertEquals(url, client.url);
@@ -16,7 +17,6 @@ public class HttpClientTests {
 
     @Test
     public void shouldAddQueryParamToUrl() {
-        String url = "https://google.com/";
         HttpClient client = new HttpClient(url)
             .addQueryParam("q", "value");
 
@@ -25,7 +25,6 @@ public class HttpClientTests {
 
     @Test
     public void shouldAddAnyQueryParamsToUrl() {
-        String url = "https://google.com/";
         HttpClient client = new HttpClient(url)
             .addQueryParam("q", "value")
             .addQueryParam("city", "London")
