@@ -20,6 +20,11 @@ public class HttpClientWeather extends HttpClient {
         super(url);
     }
 
+    public HttpClientWeather addQueryParam(String query, String value) {
+        super.addQueryParam(query, value);
+        return this;
+    }
+
     public WeatherAPIModel sendGet() throws IOException {
         Request request = new Request.Builder()
             .cacheControl(new CacheControl.Builder()
