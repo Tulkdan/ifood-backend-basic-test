@@ -9,7 +9,6 @@ import java.util.HashMap;
 import com.ifood.models.WeatherAPIModel;
 import com.ifood.models.WeatherMainModel;
 import com.ifood.models.WeatherModel;
-import com.ifood.utils.HttpClientWeather;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +16,11 @@ import org.mockito.Mockito;
 
 public class WeatherTest {
 
-    private HttpClientWeather api = Mockito.mock(HttpClientWeather.class);
     WeatherAPIModel mock = new WeatherAPIModel();
+    Weather mockWeather = Mockito.mock(Weather.class);
 
     @Before
     public void mockApiRequest() throws IOException {
-        // TODO: figure it out why this is not mocking
         WeatherModel weather = new WeatherModel();
         weather.main = "Cloud";
         weather.description = "A bit cloudy";
@@ -39,14 +37,12 @@ public class WeatherTest {
         mock.weather = weathers;
         mock.main = weatherMain;
 
-        when(api.sendGet()).thenReturn(mock);
+        when(mockWeather.index("London")).thenReturn(mock.toOutput());
     }
 
     @Test
-    public void shouldReturnAnResponseForTheLocation() {
-        Weather w = new Weather();
-
-        HashMap<String, String> response = w.index("London");
+    public void shouldReturnAnResponseForTheLocation() throws IOException {
+        HashMap<String, String> response = mockWeather.index("London");
 
         assertEquals(response, mock.toOutput());
     }
