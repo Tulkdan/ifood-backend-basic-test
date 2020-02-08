@@ -1,14 +1,14 @@
 package com.ifood.controllers;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping(path = "/about")
+@RestController
 public class About {
 
-    public About() {
-
+    @RequestMapping(path = "/about")
+    public String index() {
+        return "This service is working as it should";
     }
 
 }
