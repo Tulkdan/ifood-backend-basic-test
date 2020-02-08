@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
 public class Weather {
 
-    private String API_KEY = "e67eb2059e397b69cfbe8ef97f015799";
+    private String API_KEY = System.getenv("WEATHER_API_KEY");
 
     @RequestMapping(path = "/weather")
     @ResponseBody
